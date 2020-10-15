@@ -2,6 +2,7 @@ import json
 import pandas
 import urllib
 import webbrowser
+from ui import requestSheetName
 
 def findIndex(arr, key, val):
   # Find index in array
@@ -16,8 +17,9 @@ def getData(path):
   if path.endswith('.csv'):
     data = (pandas.read_csv(path)).to_json(orient='records')
   else:
-    data = (pandas.read_excel(path)).to_json(orient='records')
-  
+    sheetName = requestSheetName()
+    data = (pandas.read_excel(path, sheet_name=sheetName)).to_json(orient='records')
+
   return json.loads(data)
 
 def spaceSize(data):
